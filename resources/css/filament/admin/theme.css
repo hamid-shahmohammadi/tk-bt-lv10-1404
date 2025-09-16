@@ -1,0 +1,73 @@
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+.checkbox-end{
+    display: flex;
+	flex-direction: column-reverse;
+	flex-wrap: wrap-reverse;
+	justify-content: flex-end;
+	align-items: flex-end;
+	align-content: flex-end;
+}
+
+@layer components{
+    .btn-primary {
+        @apply py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+    }
+    .msg{
+        @apply mr-2 py-3 px-4 bg-blue-400 rounded-br-3xl rounded-tl-3xl rounded-tr-3xl text-white;
+    }
+}
+
+/* Remove default bullets */
+ul, #myUL {
+    list-style-type: none;
+  }
+
+  /* Remove margins and padding from the parent ul */
+  #myUL {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Style the caret/arrow */
+  .caret {
+    cursor: pointer;
+    user-select: none; /* Prevent text selection */
+  }
+
+  /* Create the caret/arrow with a unicode, and style it */
+  .caret::after {
+    content: "\2B9C";
+    color: black;
+    display: inline-block;
+    margin-right: 6px;
+    /* transform: rotate(180deg); */
+    background-color: white;
+  }
+
+  /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+  .caret-down::after {
+    transform: rotate(-90deg);
+
+  }
+
+  /* Hide the nested list */
+  .nested {
+    display: none;
+    margin-right: 15px;
+  }
+
+  /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+  .active {
+    display: block;
+  }
+
+  .selectr-container{
+    width: 50%;
+  }
+  .editHarm .modal-box{
+    max-width: 50rem;
+  }
+
