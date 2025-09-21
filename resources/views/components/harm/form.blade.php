@@ -75,6 +75,9 @@
             <label class="dark:text-black">فرانشیز(%):</label>
             <input wire:model.live="form.franchise" type="number" @keyup="$wire.setFranchise()"
                 class="block dark:text-black appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-3 py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline" />
+            @error('form.franchise')
+                <span class="text-red-500 text-xs">{{ $message }}</span>
+            @enderror    
         </div>
         <div class="w-full w-1/2 h-14 mr-2">
             <label class="dark:text-black"> مبلغ تایید شده:</label>
