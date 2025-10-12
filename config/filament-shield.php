@@ -27,11 +27,7 @@ return [
         'enabled' => true,
         'name' => 'panel_user',
     ],
-    
-    'panel_user' => [
-        'enabled' => true,
-        'name' => 'medical_center',
-    ],
+
 
     'permission_prefixes' => [
         'resource' => [
