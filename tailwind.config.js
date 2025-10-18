@@ -7,13 +7,12 @@ export default {
         "./app/View/Components/**/**/*.php",
         "./app/Livewire/**/**/*.php",
 
-        // Add mary
-        "./vendor/robsontenorio/mary/src/View/Components/**/*.php"
+        
     ],
     theme: {
         extend: {},
     },
 
     // Add daisyUI
-    plugins: [require("daisyui")]
+    plugins: []
 }
