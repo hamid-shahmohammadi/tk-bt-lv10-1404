@@ -134,6 +134,9 @@ class Harm extends Page
         $this->message = null;
         $this->form->reset();
     }
+    public function deleteHarmFunc($harm_id){
+        HarmModel::destroy($harm_id);
+    }
     public function editHarmFunc($harm_id)
     {
         // dd($harm);

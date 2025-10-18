@@ -60,6 +60,7 @@
                 </td>
                 <td class="px-6 py-4 flex items-center">
                     <x-mary-button class="btn-sm btn-primary px-1" icon="o-pencil-square" @click="$wire.editHarmFunc({{$harm->id}})" />
+                    <x-mary-button class="btn-sm btn-error px-1 mr-2 text-white" icon="o-trash" @click="if(confirm('are u sure?')) {$wire.deleteHarmFunc({{$harm->id}})}" />
                     <x-mary-button class="btn-sm btn-warning text-white px-1 mr-2" icon="o-battery-50" @click="$wire.showRemindFunc({{$harm->id}})" />
                     <a class="text-blue-400 hover:text-blue-700 mr-2"
                         href="{{ route('filament.admin.resources.customers.attach', $harm->id) }}">
