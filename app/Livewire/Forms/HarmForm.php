@@ -37,8 +37,7 @@ class HarmForm extends Form
     public $contract_id;
 
     public $doctor_approval;
-
-    #[Validate('required|numeric:strict')]
+    
     public $franchise;
     public $prepayment;
 

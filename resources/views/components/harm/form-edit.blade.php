@@ -71,11 +71,7 @@
         </div>
     </div>
     <div class="flex mt-8">
-        <div class="w-full w-1/2 h-14">
-            <label class="dark:text-black">فرانشیز(%):</label>
-            <input wire:model.live="form.franchise" type="number" @keyup="$wire.setFranchise()"
-                class="block dark:text-black appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-3 py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline" />
-        </div>
+        
         <div class="w-full w-1/2 h-14 mr-2">
             <label class="dark:text-black"> مبلغ تایید شده:</label>
             <input wire:model.live="form.cost_submit" x-ref="cost_submit"
@@ -83,11 +79,8 @@
                 class="block dark:text-black appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-3 py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline" />
 
             <span class="text-sm" x-text="cost_submit_sep"></span>
-
         </div>
 
-    </div>
-    <div class="flex mt-8">
         <div class="w-full w1/2 h-14 mr-2">
             <label class="dark:text-black"> تاریخ صورت حساب:*</label>
             <input wire:model="form.billing_date" data-jdp
@@ -96,6 +89,10 @@
                 <span class="text-red-500 text-xs">{{ $message }}</span>
             @enderror
         </div>
+
+    </div>
+    <div class="flex mt-8">
+        
         <div class="w-full w-1/2 h-14 mr-2">
             <label class="dark:text-black"> قرارداد:</label>
             <select wire:model="form.contract_id"
@@ -111,14 +108,15 @@
                 <span class="text-red-500 text-xs">{{ $message }}</span>
             @enderror
         </div>
-    </div>
-    <div class="flex mt-8">
-        <div class="w-full w-1/2 h-14">
+        <div class="w-full w-1/2 h-14 mr-2">
             <label class="dark:text-black">علی الحساب:</label>
             <input wire:model="form.prepayment" type="number"
                 class="block dark:text-black appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-3 py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline" />
         </div>
-        <div class="w-full w1/2 h-14 mr-2">
+    </div>
+    <div class="flex mt-8">
+        
+        <div class="w-full h-14">
             <label class="dark:text-black">توضیحات:</label>
             <textarea wire:model="form.description"
                 class="block dark:text-black appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-3 py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
