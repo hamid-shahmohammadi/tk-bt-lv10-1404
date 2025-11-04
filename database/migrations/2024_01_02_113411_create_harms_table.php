@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('billing_date',10)->nullable();
             $table->integer('billing_time')->nullable();
             $table->string('description',128)->nullable();
-            $table->integer('cost');
+            $table->bigInteger('cost');
             $table->integer('cost_submit')->nullable();
             $table->bigInteger('harm_type_id')->nullable()->unsigned();
             $table->bigInteger('user_id')->nullable()->unsigned();

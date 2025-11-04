@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('harm_type_id'); 
             $table->foreign('harm_type_id')->references('id')->on('harm_types');
             
-            $table->integer('cost');
+            $table->bigInteger('cost');
             $table->integer('repeat')->nullable();
             $table->timestamps();
         });

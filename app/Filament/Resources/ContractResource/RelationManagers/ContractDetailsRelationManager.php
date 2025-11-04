@@ -27,10 +27,10 @@ class ContractDetailsRelationManager extends RelationManager
         return $form
             ->schema([
                 TextInput::make('cost')
-                ->currencyMask(thousandSeparator: ',')
+                //->currencyMask(thousandSeparator: ',')
                     ->label('سقف هزینه')
                     ->required()
-                    ->maxLength(255),
+                    ,
                 TextInput::make('repeat')->numeric()->label('سقف دفعات'),
 
                 // Select::make('contract_id')->label('قرارداد')
