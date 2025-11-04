@@ -27,7 +27,7 @@ class ContractDetailsRelationManager extends RelationManager
         return $form
             ->schema([
                 TextInput::make('cost')
-                //->currencyMask(thousandSeparator: ',')
+                ->currencyMask(thousandSeparator: ',')
                     ->label('سقف هزینه')
                     ->required()
                     ,
@@ -49,7 +49,7 @@ class ContractDetailsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('cost')
             ->columns([
-                TextColumn::make('cost')->currency('IRR')->label('سقف هزینه'),
+                TextColumn::make('cost')->label('سقف هزینه')->formatStateUsing(fn (string $state): string => number_format($state)),
                 TextColumn::make('contract.name')->label('نام قرارداد'),
                 TextColumn::make('harmtype.name')->label('نوع خسارت'),
                 TextColumn::make('repeat')->label('سقف دفعات'),
