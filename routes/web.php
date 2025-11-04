@@ -3,6 +3,7 @@
 use App\Models\Board;
 use App\Livewire\Welcome;
 use App\Imports\CustomersImportTK;
+use App\Imports\DependsTKImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 
@@ -24,5 +25,9 @@ Route::get('/', function () {
 
 Route::get('/import/customer/tk', function () {
    ini_set('max_execution_time', '300');
-    Excel::import(new CustomersImportTK, storage_path('/app/public/import/tk.xlsx'));
+    Excel::import(new CustomersImportTK, storage_path('/import/cus.xlsx'));
+});
+Route::get('/import/depend/tk', function () {
+   ini_set('max_execution_time', '300');
+    Excel::import(new DependsTKImport, storage_path('/import/cus.xlsx'));
 });

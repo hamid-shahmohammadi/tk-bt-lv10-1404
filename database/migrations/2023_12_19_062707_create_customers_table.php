@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('password',128);
             $table->string('mobile',32)->nullable();
             $table->string('phone',32)->nullable();
-            $table->string('sheba',32)->nullable();
+            $table->string('sheba',255)->nullable();
             $table->string('account_number',32)->nullable();
             $table->string('booklet_number',32)->nullable();
             $table->enum('sex', ['m', 'f'])->nullable();
