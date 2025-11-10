@@ -8,9 +8,10 @@ use App\Models\Depend;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ViewColumn;
 
+use Filament\Tables\Columns\ViewColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Customer\Resources\DependResource\Pages;
@@ -39,6 +40,7 @@ class DependResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(static::getTableQuery())
             ->columns([
                 ViewColumn::make('NameFamily')->label('نام ونام خانوادگی')
                 ->view('tables.columns.depend-name-column'),
@@ -58,6 +60,11 @@ class DependResource extends Resource
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function getTableQuery(){
+        
+        return parent::getEloquentQuery()->where('customer_id',Auth::user()->id);
     }
 
     public static function getRelations(): array
