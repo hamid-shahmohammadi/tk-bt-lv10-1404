@@ -32,6 +32,8 @@ class HarmTimeExport implements WithMapping,WithHeadings,FromCollection
         return DB::table('harms')
             ->leftJoin('customers','customers.id','=','harms.customer_id')
             ->leftJoin('depends','depends.id','=','harms.depend_id')
+            ->leftJoin('users','users.id','=','harms.user_id')
+            ->leftJoin('organizations','organizations.id','=','customers.organization_id')
             ->where(DB::raw('UNIX_TIMESTAMP(harms.created_at)'),'>=',$this->sd)
             ->where(DB::raw('UNIX_TIMESTAMP(harms.created_at)'),'<=',$this->ed)
             ->select('harms.*',
@@ -40,6 +42,8 @@ class HarmTimeExport implements WithMapping,WithHeadings,FromCollection
             'customers.sheba as cus_sheba',
             'depends.name as dep_name', 'depends.family as dep_family',
             'depends.national_code as dep_national_code',
+            'users.name as user_name',
+            'organizations.name as org_name'
             )
             ->get();
     }
@@ -76,7 +80,9 @@ class HarmTimeExport implements WithMapping,WithHeadings,FromCollection
             $harm->cost,
             $harm->cost_submit,
             $harm->cus_sheba,
-            $jcreate_date
+            $jcreate_date,
+            $harm->user_name,
+            $harm->org_name,
         ];
     }
 
@@ -95,6 +101,8 @@ class HarmTimeExport implements WithMapping,WithHeadings,FromCollection
             'مبلغ تایید شده',
             'شبا',
             'تاریخ ثبت سیستم',
+            'ثبات',
+            'سازمان'
         ];
     }
 }
