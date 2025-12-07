@@ -25,26 +25,27 @@ class CustomersImportTK implements ToModel, SkipsOnError, WithValidation, SkipsO
      */
     public function model(array $row)
     {
-        if ($row[0] != "ردیف") {
-
-            if ($row[2] == "اصلی") {
-                // dd($row);
+        // dd($row);
+        if ($row[0] != "ردیف بیمه شده") {
+            // dd($row);
+            if (isset($row[12]) && $row[12] == 1) {                
                 $cus_count = Customer::where('national_code', $row[8])->count();
                 if ($cus_count == 0) {
+                    // dd($row);
                     return new Customer([
-                        'name' => $row[3],
-                        'family' => $row[4],
-                        'father'=>$row[5],
+                        'name' => $row[2],
+                        'family' => $row[3],
+                        'father'=>$row[4],
                         'national_code' => $row[8],
                         'personnel_code' => $row[1],
                         'username' => $row[8],
                         'password' => Hash::make($row[8]),
-                        'organization_id' => 2,
-                        'contract_id' => 2,
-                        'mobile' => $row[13],
+                        'organization_id' => 3,
+                        'contract_id' => 3,
+                        'mobile' => $row[11],
                         'user_id' => 2,
                         'active' => 1,
-                        'sheba' => $row[14],
+                        'sheba' => $row[21],
                     ]);
                 }
             }

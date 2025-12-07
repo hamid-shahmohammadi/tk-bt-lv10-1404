@@ -25,9 +25,9 @@ Route::get('/', function () {
 
 Route::get('/import/customer/tk', function () {
    ini_set('max_execution_time', '300');
-    Excel::import(new CustomersImportTK, storage_path('/import/cus.xlsx'));
+    Excel::import(new CustomersImportTK, storage_path('/import/fala.xlsx'));
 });
 Route::get('/import/depend/tk', function () {
    ini_set('max_execution_time', '300');
-    Excel::import(new DependsTKImport, storage_path('/import/cus.xlsx'));
+    Excel::import(new DependsTKImport, storage_path('/import/fala.xlsx'));
 });

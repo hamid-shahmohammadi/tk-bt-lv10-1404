@@ -15,44 +15,46 @@ class DependsTKImport implements ToModel
      */
     public function model(array $row)
     {
-        if ($row[0] != "ردیف") {
-
-            if ($row[2] != "اصلی") {
-                if($row[2]=="همسر"){
-                    $rel=1;
-                    $sex="f";
-                }elseif($row[2]=="دختر"){
-                    $rel=3;
-                     $sex="f";
-                }
-                elseif($row[2]=="پسر"){
-                    $rel=2;
-                     $sex="m";
-                }elseif($row[2]=="مادر"){
-                    $rel=5;
-                     $sex="f";
-                }elseif($row[2]=="پدر"){
-                    $rel=4;
-                    $sex="m";
-                }
+        // dd($row);
+        if ($row[0] != "ردیف بیمه شده") {
+            // dd($row);
+            if (isset($row[12]) && $row[12] != 1) {
                 // dd($row);
-                $c = Customer::where('national_code', $row[8])->first();
-                if (isset($c)) {
-                    // dd($row[9]);
+                $cus = Customer::where('national_code', $row[13])->first();
+                if ($cus) {
+                    // dd($row);
+                    if ($row[12] == 2) {
+                        $rel = 1;
+                        $sex = "f";
+                    } elseif ($row[12] == 8) {
+                        $rel = 3;
+                        $sex = "f";
+                    } elseif ($row[12] == 7) {
+                        $rel = 2;
+                        $sex = "m";
+                    } elseif ($row[12] == 4) {
+                        $rel = 5;
+                        $sex = "f";
+                    } elseif ($row[12] == 3) {
+                        $rel = 4;
+                        $sex = "m";
+                    }
+
                     return new Depend([
-                        'name' => $row[3],
-                        'family' => $row[4],
-                        'father' => $row[5],
+                        'name' => $row[2],
+                        'family' => $row[3],
+                        'father' => $row[4],
                         'sex' => $sex,
-                        'national_code' => $row[9],
-                        'birth_date' => $row[6],
-                        'organization_id' => 2,
+                        'national_code' => $row[8],
+                        'birth_date' => $row[5]??'',
+                        'organization_id' => 3,
                         'mobile' => '',
                         'user_id' => 2,
-                        'customer_id' => $c->id,
+                        'customer_id' => $cus->id,
                         'relation_id' => $rel,
                         'active' => 1,
                     ]);
+
                 }
             }
         }

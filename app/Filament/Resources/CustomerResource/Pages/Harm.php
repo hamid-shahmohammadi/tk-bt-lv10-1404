@@ -42,7 +42,7 @@ class Harm extends Page
     public $harm_type_name_remind = null;
     public bool $modalReminder = false;
 
-    public $cd_cost=null;
+    public $cd_cost = null;
 
 
     #[Computed]
@@ -59,7 +59,7 @@ class Harm extends Page
         $this->depends = $this->customer->depends;
         $this->harmTypes = HarmType::all();
         $this->paymentStatus = PaymentStatus::all();
-        $contracts=Auth::user()->contracts;
+        $contracts = Auth::user()->contracts;
         // dd($contracts);
         // $contracts=array_map('intval', json_decode($contracts, true));
         $this->contracts = Contract::whereIn('id', $contracts)->get();
@@ -92,7 +92,7 @@ class Harm extends Page
         $harm->contract_id = $this->form->contract_id;
         $harm->franchise = $this->form->franchise;
         $harm->prepayment = $this->form->prepayment;
-        if ($this->checkCostCeiling($harm->contract_id, $harm->harm_type_id, $harm->cost, $harm->customer_id, $harm->depend_id,$this->form->cost)) {
+        if ($this->checkCostCeiling($harm->contract_id, $harm->harm_type_id, $harm->cost, $harm->customer_id, $harm->depend_id, $this->form->cost_submit)) {
             if ($harm->save()) {
                 $this->message = 'خسارت با موفقیت ثبت گردید';
                 $this->showDropdown = false;
@@ -107,22 +107,22 @@ class Harm extends Page
             $this->form->cost_submit = $this->form->cost - (($this->form->franchise * $this->form->cost) / 100);
         }
     }
-    public function checkCostCeiling($contract_id, $ht_id, $harm_cost, $customer_id, $depend_id,$cost_now)
+    public function checkCostCeiling($contract_id, $ht_id, $harm_cost, $customer_id, $depend_id, $cost_submit_now)
     {
         $cd = ContractDetail::where('contract_id', $contract_id)
             ->where('harm_type_id', $ht_id)->first();
-            if($depend_id){
-                $harm_cost_sum=HarmModel::where('depend_id',$depend_id)->where('harm_type_id',$ht_id)->sum('cost');
-                $harm_cost_sum=$harm_cost_sum+$cost_now;
-            }else{
-                $harm_cost_sum=HarmModel::whereNull('depend_id')->where('customer_id',$customer_id)->where('harm_type_id',$ht_id)->sum('cost');
-                $harm_cost_sum=$harm_cost_sum+$cost_now;
-            }
+        if ($depend_id) {
+            $harm_cost_sum = HarmModel::where('depend_id', $depend_id)->where('harm_type_id', $ht_id)->sum('cost_submit');
+            $harm_cost_sum = $harm_cost_sum + $cost_submit_now;
+        } else {
+            $harm_cost_sum = HarmModel::whereNull('depend_id')->where('customer_id', $customer_id)->where('harm_type_id', $ht_id)->sum('cost_submit');
+            $harm_cost_sum = $harm_cost_sum + $cost_submit_now;
+        }
         if (isset($cd)) {
             // dd($cd->cost,$harm_cost_sum);
             if ($cd->cost >= (int) $harm_cost_sum) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         } else {
@@ -134,13 +134,14 @@ class Harm extends Page
         $this->message = null;
         $this->form->reset();
     }
-    public function deleteHarmFunc($harm_id){
+    public function deleteHarmFunc($harm_id)
+    {
         HarmModel::destroy($harm_id);
     }
     public function editHarmFunc($harm_id)
     {
         // dd($harm);
-        $harm=HarmModel::find($harm_id)->toArray();
+        $harm = HarmModel::find($harm_id)->toArray();
         // dd($harm);
         $this->editModalHarm = true;
         if (isset($harm['depend_id'])) {
@@ -167,9 +168,10 @@ class Harm extends Page
         $this->form->id = $harm["id"];
 
     }
-    public function editHarm (){
+    public function editHarm()
+    {
         $this->validate();
-        $harm=HarmModel::find($this->form->id);
+        $harm = HarmModel::find($this->form->id);
 
         $sick_arr = explode("-", $this->form->sick);
         if (isset($sick_arr[1])) {
@@ -194,7 +196,7 @@ class Harm extends Page
         $harm->contract_id = $this->form->contract_id;
         $harm->franchise = $this->form->franchise;
         $harm->prepayment = $this->form->prepayment;
-        if ($this->checkCostCeilingEdit($harm->contract_id, $harm->harm_type_id, $harm->cost, $harm->customer_id, $harm->depend_id,$harm->id)) {
+        if ($this->checkCostCeilingEdit($harm->contract_id, $harm->harm_type_id, $harm->cost, $harm->customer_id, $harm->depend_id, $harm->id)) {
             if ($harm->save()) {
                 $this->message = 'ویرایش خسارت با موفقیت ثبت گردید';
                 $this->editModalHarm = false;
@@ -203,20 +205,20 @@ class Harm extends Page
             $this->message = 'سقف هزینه از تعهد بیشتر است';
         }
     }
-    public function checkCostCeilingEdit($contract_id, $ht_id, $harm_cost, $customer_id, $depend_id,$harm_id)
+    public function checkCostCeilingEdit($contract_id, $ht_id, $harm_cost, $customer_id, $depend_id, $harm_id)
     {
         $cd = ContractDetail::where('contract_id', $contract_id)
             ->where('harm_type_id', $ht_id)->first();
-            if($depend_id){
-                $harm_cost_sum=HarmModel::where('depend_id',$depend_id)
-                ->where('id','!=',$harm_id)
-                ->where('harm_type_id',$ht_id)->sum('cost');
-            }else{
-                $harm_cost_sum=HarmModel::whereNull('depend_id')
-                ->where('id','!=',$harm_id)
-                ->where('customer_id',$customer_id)
-                ->where('harm_type_id',$ht_id)->sum('cost');
-            }
+        if ($depend_id) {
+            $harm_cost_sum = HarmModel::where('depend_id', $depend_id)
+                ->where('id', '!=', $harm_id)
+                ->where('harm_type_id', $ht_id)->sum('cost');
+        } else {
+            $harm_cost_sum = HarmModel::whereNull('depend_id')
+                ->where('id', '!=', $harm_id)
+                ->where('customer_id', $customer_id)
+                ->where('harm_type_id', $ht_id)->sum('cost');
+        }
         if (isset($cd)) {
             if ($cd->cost > (int) $harm_cost_sum) {
                 return true;
@@ -226,26 +228,27 @@ class Harm extends Page
         }
     }
 
-    public function showRemindFunc ($harm_id){
+    public function showRemindFunc($harm_id)
+    {
         // dd($harm_id);
-        $this->modalReminder=true;
-        $harm=HarmModel::find($harm_id);
+        $this->modalReminder = true;
+        $harm = HarmModel::find($harm_id);
 
         $cd = ContractDetail::where('contract_id', $harm->contract_id)
             ->where('harm_type_id', $harm->harm_type_id)->first();
 
-        $this->harm_type_name_remind=HarmType::find($harm->harm_type_id)->name;
+        $this->harm_type_name_remind = HarmType::find($harm->harm_type_id)->name;
 
-        if($cd){
-            $this->cd_cost=$cd->cost;
-            if($harm->depend_id){
-                $this->cost_sum_type=HarmModel::where('depend_id',$harm->depend_id)
-                ->where('harm_type_id',$harm->harm_type_id)->sum('cost');
-                dd($harm->depend_id,$harm->harm_type_id,$this->cost_sum_type);
-            }else{
-                $this->cost_sum_type=HarmModel::where('customer_id',$harm->customer_id)
-                ->whereNull('depend_id')
-                ->where('harm_type_id',$harm->harm_type_id)->sum('cost');
+        if ($cd) {
+            $this->cd_cost = $cd->cost;
+            if ($harm->depend_id) {
+                $this->cost_sum_type = HarmModel::where('depend_id', $harm->depend_id)
+                    ->where('harm_type_id', $harm->harm_type_id)->sum('cost');
+                dd($harm->depend_id, $harm->harm_type_id, $this->cost_sum_type);
+            } else {
+                $this->cost_sum_type = HarmModel::where('customer_id', $harm->customer_id)
+                    ->whereNull('depend_id')
+                    ->where('harm_type_id', $harm->harm_type_id)->sum('cost');
             }
         }
 
