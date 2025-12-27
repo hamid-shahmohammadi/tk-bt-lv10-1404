@@ -243,12 +243,12 @@ class Harm extends Page
             $this->cd_cost = $cd->cost;
             if ($harm->depend_id) {
                 $this->cost_sum_type = HarmModel::where('depend_id', $harm->depend_id)
-                    ->where('harm_type_id', $harm->harm_type_id)->sum('cost');
+                    ->where('harm_type_id', $harm->harm_type_id)->sum('cost_submit');
                 dd($harm->depend_id, $harm->harm_type_id, $this->cost_sum_type);
             } else {
                 $this->cost_sum_type = HarmModel::where('customer_id', $harm->customer_id)
                     ->whereNull('depend_id')
-                    ->where('harm_type_id', $harm->harm_type_id)->sum('cost');
+                    ->where('harm_type_id', $harm->harm_type_id)->sum('cost_submit');
             }
         }
 
