@@ -1,6 +1,6 @@
 <x-filament-panels::page>
     <div class="flex justify-between">
-        @if (auth()->user()->can('create_customer'))
+        @if (auth()->user()->can('create_customer') && $customer->active)
             <x-modal.index title="ثبت خسارت">
                 <x-harm.form :customer="$customer" :message="$message" />
             </x-modal.index>
