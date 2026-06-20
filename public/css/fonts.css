@@ -1,0 +1,15 @@
+@font-face {
+    font-family: vazir;
+    font-style: normal;
+    font-weight: normal;    
+    src: url('../fonts/vazir/Vazir.eot') format('embedded-opentype'), 
+    url('../fonts/vazir/Vazir.woff2') format('woff2'), 
+    url('../fonts/vazir/Vazir.woff') format('woff'), 
+    url('../fonts/vazir/Vazir.ttf') format('truetype');
+}
+.vazir{
+    font-family:'vazir'
+}
+.Tahoma{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
