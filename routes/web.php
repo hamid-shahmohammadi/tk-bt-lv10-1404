@@ -1,6 +1,7 @@
 <?php
 
 use App\Imports\CustomerImport05;
+use App\Imports\DependsImport05;
 use App\Livewire\Welcome;
 use App\Models\Board;
 use Illuminate\Support\Facades\Route;
@@ -26,4 +27,11 @@ Route::get('/import/customer',function(){
     ini_set('max_execution_time', 300);
     
     Excel::import(new CustomerImport05, storage_path('import/cus.xlsx'));
+});
+
+
+Route::get('/import/depend',function(){   
+    ini_set('max_execution_time', 300);
+    
+    Excel::import(new DependsImport05, storage_path('import/dep.xlsx'));
 });
